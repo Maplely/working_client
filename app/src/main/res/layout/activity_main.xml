@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:calendarview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="top.com.working_client.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        >
+
+        <RelativeLayout
+            android:id="@+id/pre_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            >
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:scrollIndicators="top"
+                />
+
+            <TextView
+                android:id="@+id/text_pre_show"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/progress"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="正在连接数据，请稍后!"
+                android:textSize="18dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/after_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            >
+
+            <RelativeLayout
+                android:id="@+id/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/last"
+                    android:onClick="lastMonth"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"
+                    android:background="@drawable/next"
+                    android:onClick="nextMonth"/>
+            </RelativeLayout>
+
+            <com.othershe.calendarview.weiget.WeekView
+                android:layout_below="@id/main_title"
+                    android:id="@+id/week_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    />
+
+                <com.othershe.calendarview.weiget.CalendarView
+                    android:id="@+id/calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/week_title"
+                    calendarview:choose_type="single"
+                    calendarview:lunar_size="12"
+                    calendarview:show_holiday="false"
+                    calendarview:show_lunar="true"
+                    calendarview:show_term="false"
+                    calendarview:switch_choose="false"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:padding="2dp"
+        android:orientation="horizontal"
+        >
+        <include
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            layout="@layout/item_layout_today"/>
+        <View android:layout_width="2dp"
+              android:layout_margin="10dp"
+              android:layout_height="match_parent"
+              android:background="@android:color/black"
+            />
+        <include
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            layout="@layout/item_layout_tomorrow"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/buttonText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:gravity="center_horizontal|top"
+        >
+        <TextView
+            android:id="@+id/choose_date"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle_bg"
+            android:gravity="center"
+            android:onClick="GoToday"
+            android:text="今天"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</LinearLayout>
