@@ -79,56 +79,66 @@
             </RelativeLayout>
 
             <com.othershe.calendarview.weiget.WeekView
+                android:id="@+id/week_title"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:layout_below="@id/main_title"
-                    android:id="@+id/week_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    />
+                android:layout_margin="10dp"
+                />
 
-                <com.othershe.calendarview.weiget.CalendarView
-                    android:id="@+id/calendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/week_title"
-                    calendarview:choose_type="single"
-                    calendarview:lunar_size="12"
-                    calendarview:show_holiday="false"
-                    calendarview:show_lunar="true"
-                    calendarview:show_term="false"
-                    calendarview:switch_choose="false"/>
+            <com.othershe.calendarview.weiget.CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/week_title"
+                android:layout_margin="10dp"
+                calendarview:choose_type="single"
+                calendarview:lunar_size="12"
+                calendarview:show_holiday="false"
+                calendarview:show_lunar="true"
+                calendarview:show_term="false"
+                calendarview:switch_choose="false"/>
 
         </RelativeLayout>
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:padding="2dp"
         android:orientation="horizontal"
         >
+
         <include
+            layout="@layout/item_layout_today"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            layout="@layout/item_layout_today"/>
-        <View android:layout_width="2dp"
-              android:layout_margin="10dp"
-              android:layout_height="match_parent"
-              android:background="@android:color/black"
+            android:layout_margin="8dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@android:color/black"
             />
+
         <include
+            layout="@layout/item_layout_tomorrow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            layout="@layout/item_layout_tomorrow"/>
+            android:layout_margin="8dp"
+            android:layout_weight="1"/>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/buttonText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.8"
-        android:gravity="center_horizontal|top"
+        android:gravity="center_horizontal|center"
         >
+
         <TextView
             android:id="@+id/choose_date"
             android:layout_width="50dp"

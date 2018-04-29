@@ -30,7 +30,6 @@ import java.util.List;
 
 import top.com.working_client.database.WorkingSheet;
 import top.com.working_client.database.WorkingSheetDao_new;
-import top.com.working_client.database.WorkingSheetDao_old;
 import top.com.working_client.database.WorkingTime;
 import top.com.working_client.database.WorkingTimeDao;
 import top.com.working_client.utils.ConverUtil;
@@ -44,15 +43,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView title;
     private TextView chooseDate;
     private CalendarView calenderView;
-    private static HashMap<String, String> dataList_old = new HashMap<>();
     private static HashMap<String, String> dataList_new = new HashMap<>();
-    private static WorkingTime dataList_time ;
+    private static WorkingTime dataList_time;
     private int[] mDate = CalendarUtil.getCurrentDate();
 
     public static final int FRESH = 0x000001;
     public static final int DATABASE = 0x000004;
     public static final int FINISH = 0x000002;
-    public static final int DATABASE_ERROR = 0x000003;
+    public static final int ERROR = 0x000003;
 
     public static final String TAG = "TTT";
     private static RelativeLayout pre_show;
@@ -69,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView item_today_leavetime;
     private TextView item_tomorrow_leavetime;
     private String mTodayDate;
-    private WorkingSheetDao_old old_mDao;
     private WorkingSheetDao_new new_mDao;
     private WorkingTimeDao mTimeDao;
+    //网络是否进入标志
     private boolean flag1 = false;
     private boolean flag2 = false;
+    //网络是否成功标志
     private boolean flag3 = false;
     private boolean flag4 = false;
     private boolean netisSuccess = false;
@@ -89,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             final MainActivity activity = weakReference.get();
             if (msg.what == FRESH) {
-                ShowWorkingDayUtils.setWorkingDay(activity.calenderView, dataList_old, dataList_new, activity);
+                ShowWorkingDayUtils.setWorkingDay(activity.calenderView, dataList_new, activity);
             } else if (msg.what == FINISH) {
                 pre_show.setVisibility(View.INVISIBLE);
                 after_show.setVisibility(View.VISIBLE);
                 activity.calenderView.init();
                 activity.bottom_show(activity.mTodayDate);
-            } else if (msg.what == DATABASE_ERROR) {
+            } else if (msg.what == ERROR) {
                 text_pre_show.setText("网络出现错误！！");
             } else if (msg.what == DATABASE) {
                 activity.pullDataBase();
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSingleChoose(View view, DateBean date) {
                 title.setText(date.getSolar()[0] + "年" + date.getSolar()[1] + "月");
                 if (date.getType() == 1) {
-                    bottom_show(date.toString());
+                    bottom_show(date.getSolar()[0]+"."+date.getSolar()[1]+"."+date.getSolar()[2]);
                 }
             }
         });
@@ -188,65 +187,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             item_tomorrow_banci.setText("班次:" + tomorrow_lunar + "班");
         }
-        if(dataList_time==null&&!netisSuccess){
-        //设置今天上班时间
-        if (today_lunar == null || today_lunar.equals("")) {
-            item_today_gotime.setText("出发时间: 无");
-            item_today_leavetime.setText("下班时间:无");
-        } else {
-            switch (today_lunar) {
-                case "早":
-                    item_today_gotime.setText(R.string.morning_gotime);
-                    item_today_leavetime.setText(R.string.morning_leavetime);
-                    break;
-                case "中":
-                    item_today_gotime.setText(R.string.afertnoon_gotime);
-                    item_today_leavetime.setText(R.string.afertnon_leavetime);
-                    break;
-                case "晚":
-                    item_today_gotime.setText(R.string.evening_gotime);
-                    item_today_leavetime.setText(R.string.evening_leavetime);
-                    break;
-                case "休":
-                    item_today_gotime.setText("出发时间: 无");
-                    item_today_leavetime.setText("下班时间： 无");
-                    break;
-                case "白":
-                    item_today_gotime.setText(R.string.bai_gotime);
-                    item_today_leavetime.setText(R.string.bai_leavetime);
-                    break;
-            }
-        }
-        //设置下一天上班时间
-        if (tomorrow_lunar == null || tomorrow_lunar.equals("")) {
-            item_tomorrow_gotime.setText("出发时间: 无");
-            item_tomorrow_leavetime.setText("下班时间: 无");
-        } else {
-            switch (tomorrow_lunar) {
-                case "早":
-                    item_tomorrow_gotime.setText(R.string.morning_gotime);
-                    item_tomorrow_leavetime.setText(R.string.morning_leavetime);
-                    break;
-                case "中":
-                    item_tomorrow_gotime.setText(R.string.afertnoon_gotime);
-                    item_tomorrow_leavetime.setText(R.string.afertnon_leavetime);
-                    break;
-                case "晚":
-                    item_tomorrow_gotime.setText(R.string.evening_gotime);
-                    item_tomorrow_leavetime.setText(R.string.evening_leavetime);
-                    break;
-                case "白":
-                    item_tomorrow_gotime.setText(R.string.bai_gotime);
-                    item_tomorrow_leavetime.setText(R.string.bai_leavetime);
-                    break;
-                case "休":
-                    item_tomorrow_gotime.setText("出发时间: 无");
-                    item_tomorrow_leavetime.setText("下班时间： 无");
-                    break;
-            }
-
-        }
-        }else{
+        if (dataList_time == null && !netisSuccess) {
+            //设置今天上班时间
             if (today_lunar == null || today_lunar.equals("")) {
                 item_today_gotime.setText("出发时间: 无");
                 item_today_leavetime.setText("下班时间:无");
@@ -281,8 +223,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 switch (tomorrow_lunar) {
                     case "早":
-                        item_tomorrow_gotime.setText(dataList_time.getMorning_go());
-                        item_tomorrow_leavetime.setText(dataList_time.getMorning_leave());
+                        item_tomorrow_gotime.setText(dataList_time.getEvening_gotime());
+                        item_tomorrow_leavetime.setText(dataList_time.getEvening_leavetime());
                         break;
                     case "中":
                         item_tomorrow_gotime.setText(dataList_time.getAfertnoon_gotime());
@@ -303,75 +245,108 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+        } else {
+            if (today_lunar == null || today_lunar.equals("")) {
+                item_today_gotime.setText("出发时间: 无");
+                item_today_leavetime.setText("下班时间:无");
+            } else {
+                switch (today_lunar) {
+                    case "早":
+                        item_today_gotime.setText("出发时间:"+dataList_time.getMorning_go());
+                        item_today_leavetime.setText("下班时间:"+dataList_time.getMorning_leave());
+                        break;
+                    case "中":
+                        item_today_gotime.setText("出发时间:"+dataList_time.getAfertnoon_gotime());
+                        item_today_leavetime.setText("下班时间:"+dataList_time.getAfertnon_leavetime());
+                        break;
+                    case "晚":
+                        item_today_gotime.setText("出发时间:"+dataList_time.getEvening_gotime());
+                        item_today_leavetime.setText("下班时间:"+dataList_time.getEvening_leavetime());
+                        break;
+                    case "休":
+                        item_today_gotime.setText("出发时间: 无");
+                        item_today_leavetime.setText("下班时间： 无");
+                        break;
+                    case "白":
+                        item_today_gotime.setText("出发时间:"+dataList_time.getBai_gotime());
+                        item_today_leavetime.setText("下班时间:"+dataList_time.getBai_leavetime());
+                        break;
+                }
+            }
+            //设置下一天上班时间
+            if (tomorrow_lunar == null || tomorrow_lunar.equals("")) {
+                item_tomorrow_gotime.setText("出发时间: 无");
+                item_tomorrow_leavetime.setText("下班时间: 无");
+            } else {
+                switch (tomorrow_lunar) {
+                    case "早":
+                        item_tomorrow_gotime.setText("出发时间:"+dataList_time.getMorning_go());
+                        item_tomorrow_leavetime.setText("下班时间:"+dataList_time.getMorning_leave());
+                        break;
+                    case "中":
+                        item_tomorrow_gotime.setText("出发时间:"+dataList_time.getAfertnoon_gotime());
+                        item_tomorrow_leavetime.setText("下班时间:"+dataList_time.getAfertnon_leavetime());
+                        break;
+                    case "晚":
+                        item_tomorrow_gotime.setText("出发时间:"+dataList_time.getEvening_gotime());
+                        item_tomorrow_leavetime.setText("下班时间:"+dataList_time.getEvening_leavetime());
+                        break;
+                    case "白":
+                        item_tomorrow_gotime.setText("出发时间:"+dataList_time.getBai_gotime());
+                        item_tomorrow_leavetime.setText("下班时间:"+dataList_time.getBai_leavetime());
+                        break;
+                    case "休":
+                        item_tomorrow_gotime.setText("出发时间: 无");
+                        item_tomorrow_leavetime.setText("下班时间： 无");
+                        break;
+                }
+
+            }
 
         }
     }
 
     private void pullDataBase() {
         //从数据库中读取数据
-        old_mDao = new WorkingSheetDao_old(this);
         new_mDao = new WorkingSheetDao_new(this);
         mTimeDao = new WorkingTimeDao(this);
-        List<WorkingSheet> old_workingSheets = new ArrayList<WorkingSheet>();
         List<WorkingSheet> new_workingSheets = new ArrayList<WorkingSheet>();
-        List<WorkingTime> workingTimeSheets = new ArrayList<WorkingTime>();
+        List<WorkingTime> workingTimes = new ArrayList<WorkingTime>();
         try {
-            old_workingSheets = old_mDao.queryEvery();
             new_workingSheets = new_mDao.queryEvery();
-            List<WorkingTime> workingTimes = mTimeDao.queryEvery();
-            dataList_time=workingTimes.get(0);
+            workingTimes = mTimeDao.queryEvery();
+            dataList_time = workingTimes.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (old_workingSheets.size() > 0 || new_workingSheets.size() > 0) {
-            dataList_old = ConverUtil.converDatabaseData(old_workingSheets, this, 0);
-            dataList_new = ConverUtil.converDatabaseData(new_workingSheets, this, 1);
+        if (dataList_time != null || new_workingSheets.size() > 0) {
+            dataList_new = ConverUtil.converDatabaseData(new_workingSheets, this);
             Log.e(TAG, "pullServer: 数据库读取成功");
             myHandler.sendEmptyMessage(FRESH);
         } else {
             Log.e(TAG, "pullServer: 数据库读取失败");
-            myHandler.sendEmptyMessage(DATABASE_ERROR);
+            myHandler.sendEmptyMessage(ERROR);
         }
     }
 
     public void pullServer() {
         //从服务器初始化并读取数据
-        ServerData.getOldDatas(this, new FindCallback<AVObject>() {
+        ServerData.getNewDatas(this, new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
                 flag1 = true;
                 if (list != null && list.size() > 0) {
                     flag3 = true;
-                    dataList_old = ConverUtil.converInternetData(list, getApplication(), 0);
+                    dataList_new = ConverUtil.converInternetData(list, getApplication());
                 }
-                if (flag1 & flag2) {
-                    if ((flag3 | flag4)) {
-                        Log.e(TAG, "old: 网络读取成功");
-                        netisSuccess = true;
-                        myHandler.sendEmptyMessage(FRESH);
-                    } else {
-                        Log.e(TAG, "old: 网络读取失败");
-                        netisSuccess = false;
-                        myHandler.sendEmptyMessage(DATABASE);
-                    }
+                if(flag1 & flag2){
+                if ((flag3 & flag4)) {
+                    Log.e(TAG, "网络读取成功");
+                    myHandler.sendEmptyMessage(FRESH);
+                } else {
+                    Log.e(TAG, "网络读取失败");
+                    myHandler.sendEmptyMessage(DATABASE);
                 }
-            }
-        });
-        ServerData.getNewDatas(this, new FindCallback<AVObject>() {
-            @Override
-            public void done(List<AVObject> list, AVException e) {
-                flag2 = true;
-                if (list != null && list.size() > 0) {
-                    flag4 = true;
-                }
-                if ((flag1 & flag2)) {
-                    if ((flag3 | flag4)) {
-                        Log.e(TAG, "new: 网络读取成功");
-                        myHandler.sendEmptyMessage(FRESH);
-                    } else {
-                        Log.e(TAG, "new: 网络读取失败");
-                        myHandler.sendEmptyMessage(DATABASE);
-                    }
                 }
 
             }
@@ -382,17 +357,18 @@ public class MainActivity extends AppCompatActivity {
                 flag2 = true;
                 if (list != null && list.size() > 0) {
                     flag4 = true;
-                    list.get(0);
+                    dataList_time = ConverUtil.converInternetTime(list, getApplication());
                 }
-                if ((flag1 & flag2)) {
-                    if ((flag3 | flag4)) {
-                        Log.e(TAG, "new: 网络读取成功");
-                        myHandler.sendEmptyMessage(FRESH);
-                    } else {
-                        Log.e(TAG, "new: 网络读取失败");
-                        myHandler.sendEmptyMessage(DATABASE);
-                    }
+                if(flag1&flag2){
+                if ((flag3 & flag4)) {
+                    Log.e(TAG, "new: 网络读取成功");
+                    myHandler.sendEmptyMessage(FRESH);
+                } else {
+                    Log.e(TAG, "new: 网络读取失败");
+                    myHandler.sendEmptyMessage(DATABASE);
                 }
+                }
+
             }
         });
     }

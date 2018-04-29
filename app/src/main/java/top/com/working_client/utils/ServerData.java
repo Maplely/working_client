@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.PushService;
 
 /**
  * Created by ttop on 2018/2/17.
@@ -12,15 +13,9 @@ import com.avos.avoscloud.FindCallback;
 
 public class ServerData {
 
-    private static AVQuery<AVObject> workTask;
     private static AVQuery<AVObject> workTask_new;
     private static AVQuery<AVObject> workTask_time;
 
-    public static void getOldDatas(Activity activity, FindCallback<AVObject> callback) {
-        PushService.setDefaultPushCallback(activity, activity.getClass());
-        workTask = new AVQuery<>("WorkTask");
-        workTask.findInBackground(callback);
-    }
     public static void getNewDatas(Activity activity, FindCallback<AVObject> callback) {
         PushService.setDefaultPushCallback(activity, activity.getClass());
         workTask_new = new AVQuery<>("WorkTask_new");

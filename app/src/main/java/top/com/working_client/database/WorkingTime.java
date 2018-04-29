@@ -11,21 +11,32 @@ import com.j256.ormlite.table.DatabaseTable;
 public class WorkingTime {
     public WorkingTime() {
     }
-    @DatabaseField(columnName = "morning_go", dataType = DataType.STRING, generatedId = true)
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @DatabaseField(columnName = "_id", dataType = DataType.INTEGER, generatedId = true)
+    private int id;
+    @DatabaseField(columnName = "morning_go", dataType = DataType.STRING)
     private String morning_go;
-    @DatabaseField(columnName = "morning_leave", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "morning_leave", dataType = DataType.STRING)
     private String morning_leave;
-    @DatabaseField(columnName = "afertnoon_gotime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "afertnoon_gotime", dataType = DataType.STRING)
     private String afertnoon_gotime;
-    @DatabaseField(columnName = "afertnon_leavetime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "afertnon_leavetime", dataType = DataType.STRING)
     private String afertnon_leavetime;
-    @DatabaseField(columnName = "evening_gotime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "evening_gotime", dataType = DataType.STRING)
     private String evening_gotime;
-    @DatabaseField(columnName = "evening_leavetime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "evening_leavetime", dataType = DataType.STRING)
     private String evening_leavetime;
-    @DatabaseField(columnName = "bai_gotime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "bai_gotime", dataType = DataType.STRING)
     private String bai_gotime;
-    @DatabaseField(columnName = "bai_leavetime", dataType = DataType.STRING, generatedId = true)
+    @DatabaseField(columnName = "bai_leavetime", dataType = DataType.STRING)
     private String bai_leavetime;
 
     public String getMorning_go() {

@@ -15,8 +15,7 @@ import top.com.working_client.MainActivity;
 public class ShowWorkingDayUtils {
     public static HashMap<String, String> data = new HashMap<>();
 
-    public static void setWorkingDay(CalendarView calenderView, HashMap<String, String> old_map,HashMap<String, String> new_map, Activity ctx) {
-        data.putAll(old_map);
+    public static void setWorkingDay(CalendarView calenderView,HashMap<String, String> new_map, Activity ctx) {
         data.putAll(new_map);
         MainActivity.SendHandler handler = new MainActivity.SendHandler((MainActivity) ctx);
         calenderView.setSpecifyMap(data);
