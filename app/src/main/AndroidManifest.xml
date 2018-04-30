@@ -20,6 +20,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!--<meta-data android:name="appkey"-->
+                       <!--android:value="3azDhGqnFKxjvtuKp8JkuU9y-gzGzoHsz"/>-->
+            <!--<meta-data android:name="appvalue"-->
+                       <!--android:value="NT36wF5CSaE4lGirGDXNp2d6"/>-->
         </activity>
         <service
             android:name="com.avos.avoscloud.PushService"

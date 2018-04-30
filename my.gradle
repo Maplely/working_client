@@ -1,0 +1,10 @@
+loadconfig()
+def loadconfig(){
+    def separator = System.getProperty("file.separator")
+    def properties = new Properties()
+    def file = new File(rootDir.getAbsolutePath() + separator + "my.properties")
+    properties.load(file.newDataInputStream())
+
+    gradle.ext.key=properties.get("appkey")
+    gradle.ext.value=properties.get("appvalue")
+}
