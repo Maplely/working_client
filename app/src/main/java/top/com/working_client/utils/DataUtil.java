@@ -56,7 +56,7 @@ public class DataUtil {
         StringBuilder sb = new StringBuilder();
         int i = date.indexOf(".");
         int j = date.lastIndexOf(".");
-        sb.append(date.substring(0, i) + "年" + date.substring(i + 1, j) + "月" + date.substring(j + 1) + "日");
+        sb.append(date.substring(0, i) + "." + date.substring(i + 1, j) + "." + date.substring(j + 1));
         return sb.toString();
     }
 

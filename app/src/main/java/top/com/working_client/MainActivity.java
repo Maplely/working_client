@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean flag3 = false;
     private boolean flag4 = false;
     private boolean netisSuccess = false;
+    private ProgressBar mProgress;
 
     public static class SendHandler extends Handler {
         private WeakReference<MainActivity> weakReference;
@@ -124,13 +126,14 @@ public class MainActivity extends AppCompatActivity {
         pre_show = (RelativeLayout) findViewById(R.id.pre_show);
         after_show = (RelativeLayout) findViewById(R.id.after_show);
         text_pre_show = (TextView) findViewById(R.id.text_pre_show);
-
+        mProgress = (ProgressBar) findViewById(R.id.progress);
         //显示控件
         item_today_title = (TextView) findViewById(R.id.item_today_title);
         item_today_date = (TextView) findViewById(R.id.item_today_date);
         item_today_gotime = (TextView) findViewById(R.id.item_today_gotime);
         item_today_leavetime = (TextView) findViewById(R.id.item_today_leavetime);
         item_today_banci = (TextView) findViewById(R.id.item_today_banci);
+
 
         item_tomorrow_title = (TextView) findViewById(R.id.item_tomorrow_title);
         item_tomorrow_date = (TextView) findViewById(R.id.item_tomorrow_date);
@@ -315,11 +318,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             new_workingSheets = new_mDao.queryEvery();
             workingTimes = mTimeDao.queryEvery();
-            dataList_time = workingTimes.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (dataList_time != null || new_workingSheets.size() > 0) {
+        if (workingTimes.size()>0 && new_workingSheets.size() > 0) {
+            dataList_time = workingTimes.get(0);
             dataList_new = ConverUtil.converDatabaseData(new_workingSheets, this);
             Log.e(TAG, "pullServer: 数据库读取成功");
             myHandler.sendEmptyMessage(FRESH);

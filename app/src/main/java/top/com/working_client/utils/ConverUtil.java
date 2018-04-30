@@ -79,47 +79,47 @@ public class ConverUtil {
                 for (int j = 1; j <= num_count; j++) {
                     String work=null;
 
-                        work = converType((String) avObject.get(j + ""));
+                        work =(String) avObject.get(j + "");
                     sb.delete(0, sb.length());
                     sb.append("2018." + mouth + "." + j);
                     data.put(sb.toString(), work);
                 }
-                    ws.setDay1(converType((String) avObject.get("1")));
-                    ws.setDay2(converType((String) avObject.get("2")));
-                    ws.setDay3(converType((String) avObject.get("3")));
-                    ws.setDay4(converType((String) avObject.get("4")));
-                    ws.setDay5(converType((String) avObject.get("5")));
-                    ws.setDay6(converType((String) avObject.get("6")));
-                    ws.setDay7(converType((String) avObject.get("7")));
-                    ws.setDay8(converType((String) avObject.get("8")));
-                    ws.setDay9(converType((String) avObject.get("9")));
-                    ws.setDay10(converType((String) avObject.get("10")));
-                    ws.setDay11(converType((String) avObject.get("11")));
-                    ws.setDay12(converType((String) avObject.get("12")));
-                    ws.setDay13(converType((String) avObject.get("13")));
-                    ws.setDay14(converType((String) avObject.get("14")));
-                    ws.setDay15(converType((String) avObject.get("15")));
-                    ws.setDay16(converType((String) avObject.get("16")));
-                    ws.setDay17(converType((String) avObject.get("17")));
-                    ws.setDay18(converType((String) avObject.get("18")));
-                    ws.setDay19(converType((String) avObject.get("19")));
-                    ws.setDay20(converType((String) avObject.get("20")));
-                    ws.setDay21(converType((String) avObject.get("21")));
-                    ws.setDay22(converType((String) avObject.get("22")));
-                    ws.setDay23(converType((String) avObject.get("23")));
-                    ws.setDay24(converType((String) avObject.get("24")));
-                    ws.setDay25(converType((String) avObject.get("25")));
-                    ws.setDay26(converType((String) avObject.get("26")));
-                    ws.setDay27(converType((String) avObject.get("27")));
-                    ws.setDay28(converType((String) avObject.get("28")));
+                    ws.setDay1((String) avObject.get("1"));
+                    ws.setDay2((String) avObject.get("2"));
+                    ws.setDay3((String) avObject.get("3"));
+                    ws.setDay4((String) avObject.get("4"));
+                    ws.setDay5((String) avObject.get("5"));
+                    ws.setDay6((String) avObject.get("6"));
+                    ws.setDay7((String) avObject.get("7"));
+                    ws.setDay8((String) avObject.get("8"));
+                    ws.setDay9((String) avObject.get("9"));
+                    ws.setDay10((String) avObject.get("10"));
+                    ws.setDay11((String) avObject.get("11"));
+                    ws.setDay12((String) avObject.get("12"));
+                    ws.setDay13((String) avObject.get("13"));
+                    ws.setDay14((String) avObject.get("14"));
+                    ws.setDay15((String) avObject.get("15"));
+                    ws.setDay16((String) avObject.get("16"));
+                    ws.setDay17((String) avObject.get("17"));
+                    ws.setDay18((String) avObject.get("18"));
+                    ws.setDay19((String) avObject.get("19"));
+                    ws.setDay20((String) avObject.get("20"));
+                    ws.setDay21((String) avObject.get("21"));
+                    ws.setDay22((String) avObject.get("22"));
+                    ws.setDay23((String) avObject.get("23"));
+                    ws.setDay24((String) avObject.get("24"));
+                    ws.setDay25((String) avObject.get("25"));
+                    ws.setDay26((String) avObject.get("26"));
+                    ws.setDay27((String) avObject.get("27"));
+                    ws.setDay28((String) avObject.get("28"));
                     if (num_count > 28) {
-                        ws.setDay29(converType((String) avObject.get("29")));
+                        ws.setDay29((String) avObject.get("29"));
                     }
                     if (num_count > 29) {
-                        ws.setDay30(converType((String) avObject.get("30")));
+                        ws.setDay30((String) avObject.get("30"));
                     }
                     if (num_count > 30)
-                        ws.setDay31(converType((String) avObject.get("31")));
+                        ws.setDay31((String) avObject.get("31"));
 
                 mDao.add(ws);
                 Log.e(MainActivity.TAG, "数据库储存成功");
@@ -186,19 +186,5 @@ public class ConverUtil {
         return data;
     }
 
-    public static String converType(String type) {
-        switch (type) {
-            case "1":
-                return "晚";
-            case "2":
-                return "中";
-            case "3":
-                return "白";
-            case "4":
-                return "早";
-            case "休":
-                return "休";
-        }
-        return "错误";
-    }
+
 }
