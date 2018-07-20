@@ -94,6 +94,8 @@ public class Main_Board extends JFrame {
         jta = new JTextArea(10, 30);
         jta.setEditable(false);
         jta.setLineWrap(true);
+        jta.setText("注意:\n1.文件路径名必须是英文 .xls格式\n2.另存为xls格式文件\n3.excel小标签为 在线5月班务" +
+            "\n4.目标处于第二列");
         jta.setSize(500, 200);
         jp2.add(choice);
         jp2.add(jb2);
