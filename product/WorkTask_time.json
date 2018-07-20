@@ -1,0 +1,12 @@
+{
+  "results": [{
+    "morning_go": "7:15",
+    "morning_leave": "17:00",
+    "afertnoon_gotime": "8:00",
+    "afertnon_leavetime": "18:00",
+    "evening_gotime": "9:00",
+    "evening_leavetime": "20:00",
+    "bai_gotime": "10:00",
+    "bai_leavetime": "21:00"
+  }]
+}
